@@ -10,7 +10,7 @@ require('dotenv').config()
 const db = mysql.createConnection(
         {
             host: process.env.DB_HOST,
-            port: process.env.DB_PORT,
+            // port: process.env.DB_PORT,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: 'employee_db',
@@ -36,34 +36,33 @@ function questions() {
                 'Exit']
         }])
         .then((answers) => {
-            const { choices } = answers; 
-            if (choices === "View all departments") {
+            if (answers.actions === "View All Departments") {
                 showDepartments();
             }
 
-            if (choices === "View all roles") {
+            if (answers.actions === "View All Roles") {
                 showRoles();
             }
-            if (choices === "View all employees") {
+            if (answers.actions === "View all employees") {
                 showEmployees();
             }
 
-            if (choices === "Add a department") {
+            if (answers.actions === "Add New Department") {
                 addDepartment();
             }
 
-            if (choices === "Add a role") {
+            if (answers.actions === "Add New Role") {
                 addRole();
             }
 
-            if (choices === "Add an employee") {
+            if (answers.actions === "Add New Employee") {
                 addEmployee();
             }
 
-            if (choices === "Update an employee role") {
+            if (answers.actions === "Update Employee Role") {
                 updateEmployee();
             }
-            if (choices === "Exit") {
+            if (answers.actions === "Exit") {
                 exit();
             }
         })
@@ -74,7 +73,7 @@ questions()
 // show table functions based on user selection
 function showDepartments() {
     console.log('Showing all departments...\n');
-    db.query('SELECT * FROM employee_db.departments;', function (err, results) {
+    db.query('SELECT * FROM employee_db.departments AS department;', function (err, results) {
         console.table(results);
         questions();
     });
@@ -82,7 +81,7 @@ function showDepartments() {
 
 function showRoles() {
     console.log('Showing all roles...\n');
-    db.query("SELECT roles.id, roles.title, department.name AS departments, roles.salary FROM roles LEFT JOIN departments on roles.department_id = department.id;", function (err, results) {
+    db.query("SELECT roles.id, roles.title, departments.department_name AS department, roles.salary FROM roles LEFT JOIN departments on roles.department_id = departments.id;", function (err, results) {
         console.table(results);
         if (err) {
             console.log(err);
@@ -93,7 +92,7 @@ function showRoles() {
 
 function showEmployees() {
     console.log('Showing all employees...\n'); 
-    db.query('SELECT employees.id, employees.first_name, employees.last_name, roles.title, department.name AS departments, roles.salary, CONCAT (manager.first_name, " ", manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = role.id LEFT JOIN departments ON roles.department_id = department.id LEFT JOIN employees manager ON employees.manager_id = manager.id', function (err, results) {
+    db.query('SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.department_name AS department, roles.salary LEFT JOIN roles on employees.role_id = role.id LEFT JOIN departments ON roles.department_id = department.id LEFT JOIN employees manager ON employees.manager_id = manager.id', function (err, results) {
         console.table(results);
         questions();
     })
