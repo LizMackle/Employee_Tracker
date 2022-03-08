@@ -17,7 +17,9 @@ A command-line application created to view and manage the departments, roles, an
 Run “npm install” in the terminal after cloning Github repository.
 
 ## Usage
-To use this app, type node .\index.js in the terminal.
+To use this app, type node server.js in the terminal.
+#### [Full video here](https://user-images.githubusercontent.com/93589073/157195382-c861c327-d95a-44aa-916a-b4062e66a8d5.mp4)
+![Command capture](https://user-images.githubusercontent.com/93589073/157192884-fb22b60f-b8a2-4ba7-9787-3a2aa0be18d6.PNG)
 
 ## Contribution
 Please feel free to contribute in any way by forking the repo and creating a pull request.
