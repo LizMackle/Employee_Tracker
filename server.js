@@ -43,7 +43,7 @@ function questions() {
             if (answers.actions === "View All Roles") {
                 showRoles();
             }
-            if (answers.actions === "View all employees") {
+            if (answers.actions === "View All Employees") {
                 showEmployees();
             }
 
@@ -73,15 +73,18 @@ questions()
 // show table functions based on user selection
 function showDepartments() {
     console.log('Showing all departments...\n');
-    db.query('SELECT * FROM employee_db.departments AS department;', function (err, results) {
+    db.query('SELECT * FROM employee_db.departments;', function (err, results) {
         console.table(results);
+        if (err) {
+            console.log(err);
+        };
         questions();
     });
 };
 
 function showRoles() {
     console.log('Showing all roles...\n');
-    db.query("SELECT roles.id, roles.title, departments.department_name AS department, roles.salary FROM roles LEFT JOIN departments on roles.department_id = departments.id;", function (err, results) {
+    db.query("SELECT * FROM employee_db.roles;", function (err, results) {
         console.table(results);
         if (err) {
             console.log(err);
@@ -92,8 +95,11 @@ function showRoles() {
 
 function showEmployees() {
     console.log('Showing all employees...\n'); 
-    db.query('SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.department_name AS department, roles.salary LEFT JOIN roles on employees.role_id = role.id LEFT JOIN departments ON roles.department_id = department.id LEFT JOIN employees manager ON employees.manager_id = manager.id', function (err, results) {
+    db.query('SELECT * FROM employee_db.employees;', function (err, results) {
         console.table(results);
+        if (err) {
+            console.log(err);
+        };
         questions();
     })
 };

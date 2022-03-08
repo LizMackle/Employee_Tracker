@@ -1,17 +1,17 @@
 USE employee_db;
 
-INSERT INTO departments (id, department_name)
+INSERT INTO departments (id, name)
 VALUES (001, "Main-floor"),
        (002, "Kitchen"),
        (003, "Bar");
 
-INSERT INTO roles (id, title, salary, department_id)
-VALUES (001, "Manager", 75500, 001),
-       (002, "Till", 45000, 001),
-       (003, "Bartender", 60000, 002),
-       (004, "Chef", 85000, 003),
-       (005, "Waitstaff", 55000, 002),
-       (007, "Dishwasher", 30000, 003);
+INSERT INTO roles (id, title, department_id, salary)
+VALUES (001, "Manager", 001, 75500),
+       (002, "Till", 001, 45000),
+       (003, "Bartender", 002, 60000),
+       (004, "Chef", 003, 85000),
+       (005, "Waitstaff", 002, 55000),
+       (007, "Dishwasher", 003, 30000);
        
 INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
 VALUES (001, "Megan", "Turner", 001, NULL), 
