@@ -95,7 +95,7 @@ function showRoles() {
 
 function showEmployees() {
     console.log('Showing all employees...\n'); 
-    db.query('SELECT * FROM employee_db.employees;', function (err, results) {
+    db.query('SELECT * FROM employees JOIN roles ON employees.role_id = roles.id;', function (err, results) {
         console.table(results);
         if (err) {
             console.log(err);
