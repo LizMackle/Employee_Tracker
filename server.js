@@ -15,7 +15,7 @@ const db = mysql.createConnection(
             password: process.env.DB_PASSWORD,
             database: 'employee_db',
         },
-        console.log(`Connected to the employee_db database.`)
+        console.log(`Connected to the Employee database.`)
     );
     
 // when node server.js is run in the terminal - Inquirer Prompts to update, view and add (employees, roles + departments)
@@ -112,10 +112,13 @@ function addDepartment() {
             message: "What is the name of the new department?"
         },
     ])
-        .then(function (answer) {
-            db.query("INSERT INTO departments (name) VALUES (?)", [answer.newdepartment], function (err, results) {
+        .then((answers) => {
+            db.query("INSERT INTO departments (name) VALUES (?)", [answers.newdepartment], function (err, results) {
+                if (err) {
+                    console.log(err);
+                };
             })
-            console.log('Added ' + answer.newdepartment + " to departments!");
+            console.log('Added ' + answers.newdepartment + " to departments!");
             questions();
         })
 };
@@ -146,7 +149,7 @@ function addRole() {
                 db.query("INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)", [answers.rolename, answers.rolesalary, answers.roledepartment], function (err, results) {
                     console.log(err);
                 })
-                console.log('Added' + answer.rolename + " to roles!");
+                console.log('Added' + answers.rolename + " to roles!");
                 questions();
             })
     })
@@ -196,7 +199,6 @@ function addEmployee() {
                                 console.log(err);
                             })
                             console.log("Employee has been added!")
-                            showEmployees();
                             questions();
                         })
                 })
@@ -216,8 +218,8 @@ function updateEmployee() {
                 choices: employeeList
             },
         ])
-            .then((answer) => {
-                let employee = answer.employeeUpdate;
+            .then((answers) => {
+                let employee = answers.employeeUpdate;
                 db.query('SELECT * FROM employee_db.roles;', function (err, results) {
                     let roles = [];
                     results.forEach(result => roles.push({ name: result.title, value: result.id }));
@@ -230,12 +232,10 @@ function updateEmployee() {
                             choices: roles
                         },
                     ])
-                        .then((answer) => {
-                            let newrole = answer.roleUpdate;
+                        .then((answers) => {
+                            let newrole = answers.roleUpdate;
                             db.query('UPDATE employee_db.employees SET role_id = ? WHERE id = ?', [newrole, employee], function (err, results) {
-                                
                             console.log("Employee has been updated!");
-                            showEmployees();
                             questions();
                             })
                         })
@@ -247,7 +247,7 @@ function updateEmployee() {
 // exit function
 function exit() {
     console.log("Employee Tracker completed!");
-    db.end();
+    // db.end();
 };
 
 
