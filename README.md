@@ -14,10 +14,16 @@ A command-line application created to view and manage the departments, roles, an
   - [Questions](#questions)
 
 ## Installation
-Run “npm install” in the terminal after cloning Github repository.
+Clone the Github repository:<br>
+`https://github.com/LizMackle/Employee_Tracker.git`
+
+Install all dependencies required for application:<br>
+`npm install` from the root directory.
 
 ## Usage
-To use this app, type node server.js in the terminal.
+To use this app, use the following command in the terminal:
+
+`node server.js`
 #### [Full video here](https://user-images.githubusercontent.com/93589073/157233613-ec4ee726-68e1-4b1b-ad04-48474f6f58e6.mp4)
 ![Command capture](https://user-images.githubusercontent.com/93589073/157192884-fb22b60f-b8a2-4ba7-9787-3a2aa0be18d6.PNG)
 
